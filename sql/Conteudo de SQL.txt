@@ -1,0 +1,77 @@
+
+CREATE TABLE IF NOT EXISTS `aluno` (
+  `id` int(6) unsigned NOT NULL,
+  `nome` varchar(50)  NOT NULL,
+  `cpf` int(11) unsigned NOT NULL,
+  `nascimento` int(6) unsigned NOT NULL,
+  `curso` char(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
+INSERT INTO `aluno` (`id`, `nome`, `cpf`, `nascimento`, `curso` ) VALUES
+  ('1', 'Carlos', '00011122201', '012001', 'QA0123A'),
+  ('2', 'Maria', '00011122202', '012002', 'QA0123A'),
+  ('3', 'Ana', '00011122203', '012003', 'PD0123A'),
+  ('4', 'Caio', '00011122201', '012004', 'QA0123A'),
+  ('5', 'Julia', '00011122202', '012005', 'QA0123A'),
+  ('6', 'Amanda', '00011122203', '012006', 'QA0123A'),
+  ('7', 'João', '00011122201', '012007', 'QA0123A'),
+  ('8', 'José', '00011122202', '012008', 'QA0123A'),
+  ('9', 'Ingrid', '00011122203', '012009', 'PD0123A');
+  
+SELECT  nome, cpf, nascimento, curso
+FROM aluno
+WHERE curso 
+LIKE 'QA0123A' 
+AND nascimento = (SELECT MIN(nascimento) FROM aluno);
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `animal` (
+  `codanimal` int(11) NOT NULL,
+  `nome` text NOT NULL,
+  `especie` text NOT NULL,
+  `sexo` text NOT NULL,
+  `cor` text NOT NULL,
+  `coddono` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `animal` (`codanimal`, `nome`, `especie`, `sexo`, `cor`, `coddono`) VALUES
+(1, 'lexa', 'poodle', 'femea', 'branco', 1),
+(2, 'anitta', 'srd', 'femea', 'preto', 1),
+(3, 'ludmilla', 'srd', 'femea', 'caramelo', 2),
+(4, 'ronaldo', 'pinscher', 'macho', 'caramelo', 3),
+(5, 'minerva', 'maltes', 'femea', 'branco', 3),
+(6, 'axel', 'srd', 'macho', 'preto', 4);
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `dono` (
+  `coddono` int(11) NOT NULL,
+  `nome` text NOT NULL,
+  `bairro` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `dono` (`coddono`, `nome`, `bairro`) VALUES
+(1, 'maria', 'centro'),
+(2, 'valeria', 'vila nova'),
+(3, 'tom', 'centro'),
+(4, 'jose', 'vila nova');
+COMMIT;
+
+
+-- --------------------------------------------------------
+
+
+SELECT animal.nome, dono.nome, dono.bairro
+FROM animal, dono
+WHERE animal.coddono = dono.coddono;
+
+SELECT animal.nome, dono.nome
+FROM animal 
+INNER JOIN dono ON animal.coddono = dono.coddono;
+
